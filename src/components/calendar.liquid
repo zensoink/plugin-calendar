@@ -1,0 +1,31 @@
+{% if calendar.events and calendar.events.size > 0 %}
+    <section class="calendar-agenda">
+        {% assign current_day = "" %}
+        {% for event in calendar.events %}
+            {% if event.day_label != current_day %}
+                {% unless forloop.first %}
+                    </ul>
+                {% endunless %}
+                <h2 class="day-label">{{ event.day_label | date: "%A, %B %-d" }}</h2>
+                <ul class="events">
+                {% assign current_day = event.day_label %}
+            {% endif %}
+            <li class="event">
+                {% if event.all_day %}
+                    <span class="event-time">All day</span>
+                {% else %}
+                    <span class="event-time">{{ event.time_label }}{% if event.end_time_label %}–{{ event.end_time_label }}{% endif %}</span>
+                {% endif %}
+                <span class="event-body">
+                    <span class="event-title">{{ event.title }}</span>
+                    {% if event.location %}
+                        <span class="event-location">{{ event.location }}</span>
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
+{% else %}
+    <p class="calendar-empty-text">No events in the coming days.</p>
+{% endif %}

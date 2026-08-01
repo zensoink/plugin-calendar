@@ -12,7 +12,7 @@ const paths = {
   src: 'src',
   dev: 'dev',
   dist: 'dist',
-  cssFile: 'public/main.css',
+  cssFile: 'src/main.css',
   copyTargets: ['manifest.json', 'README.md', 'LICENSE', 'CHANGELOG.md']
 }
 
@@ -31,7 +31,10 @@ export default defineConfig(({ command }) => {
       liquid({
         root: paths.src,
         data: [`${paths.dev}/mock/*.json`],
-        globals: { manifest },
+        globals: { manifest, dev: true },
+        filters: {
+          json_safe: (value) => JSON.stringify(value).replace(/</g, '\\u003c'),
+        },
       })
     )
   }

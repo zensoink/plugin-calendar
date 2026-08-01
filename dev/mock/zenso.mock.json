@@ -4,8 +4,8 @@
       "id": "user_123",
       "name": "Tytus Bomba",
       "first_name": "Tytus",
-      "locale": "pl-PL",
-      "language": "pl",
+      "locale": "en-GB",
+      "language": "en",
       "time_zone_iana": "Europe/Warsaw",
       "utc_offset": 7200
     },
@@ -21,5 +21,72 @@
       "core_version": "0.0.0",
       "firmware_version": "0.0.0"
     }
+  },
+  "config": {
+    "calendar_feeds": [
+      "https://calendar.google.com/calendar/ical/example%40gmail.com/private-xyz/basic.ics"
+    ],
+    "days_ahead": 14,
+    "view": "week"
+  },
+  "calendar": {
+    "today": "2026-08-01",
+    "today_label": "Saturday, August 1, 2026",
+    "now_label": "10:15",
+    "days_ahead": 14,
+    "fetched_at": "2026-08-01T08:15:00.000Z",
+    "sources": ["https://calendar.google.com/calendar/ical/example%40gmail.com/private-xyz/basic.ics"],
+    "events": [
+      {
+        "title": "Farmers market",
+        "location": null,
+        "all_day": true,
+        "day_label": "2026-08-01",
+        "start": "2026-08-01T00:00:00+02:00",
+        "end": "2026-08-02T00:00:00+02:00",
+        "time_label": "",
+        "end_time_label": null
+      },
+      {
+        "title": "Team standup",
+        "location": "Room 4",
+        "all_day": false,
+        "day_label": "2026-08-01",
+        "start": "2026-08-01T14:30:00+02:00",
+        "end": "2026-08-01T15:30:00+02:00",
+        "time_label": "14:30",
+        "end_time_label": "15:30"
+      },
+      {
+        "title": "Gym workout",
+        "location": "Iron Factory",
+        "all_day": false,
+        "day_label": "2026-08-03",
+        "start": "2026-08-03T18:00:00+02:00",
+        "end": "2026-08-03T19:00:00+02:00",
+        "time_label": "18:00",
+        "end_time_label": "19:00"
+      },
+      {
+        "title": "Dentist check-up",
+        "location": "Smile Clinic",
+        "all_day": false,
+        "day_label": "2026-08-05",
+        "start": "2026-08-05T09:30:00+02:00",
+        "end": "2026-08-05T10:00:00+02:00",
+        "time_label": "09:30",
+        "end_time_label": "10:00"
+      },
+      {
+        "title": "Weekend trip",
+        "location": null,
+        "all_day": true,
+        "day_label": "2026-08-08",
+        "start": "2026-08-08T00:00:00+02:00",
+        "end": "2026-08-09T00:00:00+02:00",
+        "time_label": "",
+        "end_time_label": null
+      }
+    ]
   }
 }

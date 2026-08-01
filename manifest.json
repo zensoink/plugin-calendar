@@ -1,16 +1,50 @@
 {
   "$schema": "https://schemas.zenso.app/plugin-manifest.schema.json",
-  "id": "zenso/zenso-plugin-example",
-  "name": "Zenso Plugin Example",
+  "id": "zenso/zenso-plugin-calendar",
+  "name": "Zenso Calendar",
   "thumbnail": "assets/logo.png",
-  "description": "Example plugin and starter for Zenso e-ink displays.",
+  "description": "Read-only agenda view synced from Google Calendar or Apple iCloud via ICS feeds.",
   "schema_version": 1,
-  "version": "0.0.2",
+  "version": "0.2.0",
   "core_min": "0.0.0",
   "license": "MIT",
   "author": {
     "name": "Zenso",
     "url": "https://github.com/zensoink"
   },
-  "config_schema": {}
+  "config_schema": {
+    "type": "object",
+    "properties": {
+      "calendar_feeds": {
+        "type": "array",
+        "items": { "type": "string", "format": "uri" },
+        "description": "ICS feed URLs (Google Calendar secret iCal address, Apple iCloud public calendar)"
+      },
+      "days_ahead": {
+        "type": "number",
+        "minimum": 1,
+        "maximum": 60,
+        "default": 14,
+        "description": "How many days ahead to show events"
+      },
+      "view": {
+        "type": "string",
+        "enum": ["list", "month", "week", "day"],
+        "default": "list",
+        "description": "Calendar layout: list (agenda), month, week, or day grid"
+      }
+    },
+    "required": ["calendar_feeds"]
+  },
+  "data_sources": [
+    {
+      "id": "calendar",
+      "type": "ics",
+      "config": {
+        "urls_field": "calendar_feeds",
+        "days_ahead_field": "days_ahead"
+      },
+      "refresh_ttl": 600
+    }
+  ]
 }

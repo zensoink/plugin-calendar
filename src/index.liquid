@@ -3,11 +3,40 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" href="{{ 'main.css' | asset_url }}" />
+        {% if dev %}
+            <link rel="stylesheet" href="src/main.css" />
+        {% else %}
+            <link rel="stylesheet" href="{{ 'main.css' | asset_url }}" />
+        {% endif %}
         <title>{{ manifest.name }}</title>
     </head>
     <body>
-        {% render './components/logo.liquid' %}
-        <strong>{{ manifest.description }}</strong>
+        <main class="calendar-app">
+            {% if calendar %}
+                {% if config.view == 'month' or config.view == 'week' or config.view == 'day' %}
+                    <div class="calendar-grid" id="calendar-grid"></div>
+                    <script>
+                        window.__ZENSO_DATA__ = {
+                            calendar: {{ calendar | json_safe }},
+                            config: {{ config | json_safe }}
+                        };
+                    </script>
+                    <script {% if dev %}type="module"{% endif %} src="{% if dev %}/src/main.js{% else %}calendar.js{% endif %}"></script>
+                {% else %}
+                    <header class="calendar-header">
+                        <div class="calendar-title">
+                            <h1 class="calendar-date">{{ calendar.today_label }}</h1>
+                            <span class="calendar-clock">{{ calendar.now_label }}</span>
+                        </div>
+                    </header>
+                    {% render './components/calendar.liquid' with calendar as calendar %}
+                {% endif %}
+            {% else %}
+                <div class="calendar-empty">
+                    <h1 class="calendar-date">No calendar configured</h1>
+                    <p>Add your ICS feed URLs (Google Calendar or Apple iCloud) in the plugin settings.</p>
+                </div>
+            {% endif %}
+        </main>
     </body>
 </html>

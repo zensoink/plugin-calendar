@@ -24,7 +24,7 @@ body {
 .calendar-header {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
+    justify-content: center;
     padding-bottom: 24px;
     border-bottom: 3px solid var(--ink);
 }

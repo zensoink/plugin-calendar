@@ -18,6 +18,30 @@ body {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    gap: 16px;
+}
+
+/* Static toolbar — e-ink take on Mina's Day/Week/Month bar */
+.calendar-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 3px solid var(--ink);
+}
+
+.calendar-view {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.calendar-date {
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--accent);
 }
 
 .calendar-grid {
@@ -36,39 +60,78 @@ body {
     text-align: center;
 }
 
-.calendar-date {
-    font-size: 44px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+.calendar-empty .calendar-date {
+    color: var(--ink);
 }
 
-/* FullCalendar e-ink overrides (high contrast, monochrome-friendly) */
+/* FullCalendar theming — clean planner with solid colored event blocks */
 .fc {
     background: var(--paper);
     color: var(--ink);
-    font-size: 26px;
+    font-size: 24px;
 }
 
-.fc .fc-scrollgrid,
-.fc .fc-col-header-cell,
+.fc .fc-scrollgrid {
+    border: none;
+}
+
+.fc .fc-col-header-cell {
+    background: transparent;
+    border-color: var(--hairline);
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.fc .fc-col-header-cell-cushion {
+    color: var(--ink);
+    text-decoration: none;
+    padding: 12px 0;
+}
+
+.fc .fc-daygrid-day-number {
+    color: var(--ink);
+    padding: 10px;
+    font-size: 24px;
+}
+
 .fc .fc-daygrid-day,
-.fc .fc-list-event {
+.fc .fc-timegrid-col,
+.fc .fc-timegrid-slot {
     border-color: var(--hairline) !important;
 }
 
-.fc .fc-daygrid-day-number,
-.fc .fc-col-header-cell-cushion,
-.fc .fc-list-day-text,
-.fc .fc-list-day-side-text {
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-slot-label {
     color: var(--ink);
-    text-decoration: none;
+    font-size: 20px;
 }
 
 .fc .fc-day-today {
     background: #e5e7eb !important;
 }
 
+.fc .fc-list-day-cushion {
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.fc .fc-list-event {
+    border-color: var(--hairline) !important;
+}
+
 .fc .fc-event {
     border: none;
+    border-radius: 3px;
     color: #fff;
+    padding: 2px 5px;
+    font-size: 20px;
+}
+
+.fc .fc-event-title {
+    font-weight: 600;
+}
+
+.fc .fc-event-time {
+    font-weight: 700;
 }

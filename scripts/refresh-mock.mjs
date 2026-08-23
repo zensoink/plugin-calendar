@@ -55,22 +55,34 @@ async function main() {
     console.error('Set CALENDAR_ICS_URLS in .env (comma-separated ICS feed URLs)')
     process.exit(1)
   }
+  const colors = (process.env.CALENDAR_ICS_COLORS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  const feeds = urls.map((url, i) => ({
+    url,
+    color: colors[i] || '#3b82f6',
+  }))
+  const colorByUrl = Object.fromEntries(feeds.map((f) => [f.url, f.color]))
 
   const mock = JSON.parse(readFileSync(mockPath, 'utf8'))
   const tz = mock.zenso.user.time_zone_iana
 
   const fetched = []
-  for (const url of urls) {
-    const data = await ical.async.fromURL(url)
+  for (const feed of feeds) {
+    const data = await ical.async.fromURL(feed.url)
     for (const key of Object.keys(data)) {
       const ev = data[key]
       if (ev.type !== 'VEVENT' || ev.rrule) continue
-      fetched.push(toEvent(ev, tz))
+      const event = toEvent(ev, tz)
+      event.color = feed.color
+      fetched.push(event)
     }
   }
   fetched.sort((a, b) => (a.start || '').localeCompare(b.start || ''))
 
   const today = new Date().toISOString().slice(0, 10)
+  mock.config.calendar_feeds = feeds
   mock.calendar = {
     ...mock.calendar,
     today,

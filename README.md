@@ -25,7 +25,7 @@ Plugin instance config (`configJson`):
 
 | Field            | Type       | Description                                                       | Default    |
 | ---------------- | ---------- | ----------------------------------------------------------------- | ---------- |
-| `calendar_feeds` | `string[]` | ICS feed URLs (Google secret iCal, Apple iCloud public calendar)  | —          |
+| `calendar_feeds` | `{ url, color }[]` | ICS feeds. Each entry is `{ url: string, color: string }` (Google/Apple don't share color, so pick one per feed)  | —          |
 | `days_ahead`     | `number`   | How many days ahead to show events (1–60)                         | `14`       |
 | `view`           | `string`   | Layout: `list`, `month`, `week`, or `day`                         | `list`     |
 
@@ -35,13 +35,13 @@ Plugin instance config (`configJson`):
 
 1. Calendar → open the calendar's settings (⋮ → Settings and sharing).
 2. Under **Integrate calendar** → copy the **Secret address in iCal format** URL.
-3. Paste it into `calendar_feeds`.
+3. Add it as a feed: set `url` to that address and pick a `color`.
 
 **Apple iCloud**
 
 1. On iCloud.com (or the Calendar app): Calendar → click the calendar name → **Share** → enable **Public Calendar**.
 2. Copy the public calendar URL (`.ics`), e.g. `https://pXX-caldav.icloud.com/published/...`.
-3. Paste it into `calendar_feeds`.
+3. Add it as a feed: set `url` to that address and pick a `color`.
 
 ## Development
 

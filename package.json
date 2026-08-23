@@ -1,13 +1,13 @@
 {
   "name": "zenso-plugin-example",
   "description": "Example plugin and starter for Zenso e-ink displays",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "author": "zenso",
   "private": true,
   "scripts": {
     "dev": "vite dev",
     "prebuild": "rm -rf ./dist/*",
-    "build": "vite build && vite build --config vite.calendar.config.js",
+    "build": "vite build",
     "postbuild": "npm run zip:pack",
     "zip:pack": "cd dist && zip -r plugin.zip .",
     "mock:refresh": "node scripts/refresh-mock.mjs"

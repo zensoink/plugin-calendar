@@ -44,6 +44,3 @@ Thumbs.db
 
 # Local env & scratch files
 .env
-.env.*
-backend-prompt-tmp.txt
-panel-prompt-tmp.txt

@@ -21,7 +21,7 @@
         "type": "string",
         "enum": ["list", "month", "week", "day"],
         "default": "list",
-        "description": "Calendar layout: list (agenda), month, week, or day grid"
+        "description": "Calendar layout: list (FullCalendar list view), month, week, or day grid"
       },
       "days_ahead": {
         "type": "number",

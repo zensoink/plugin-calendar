@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    {% if dev %}
-        <link rel="stylesheet" href="src/main.css" />
-    {% else %}
-        <link rel="stylesheet" href="{{ 'main.css' | asset_url }}" />
-    {% endif %}
-    <title>{{ manifest.name }}</title>
-</head>
-<body>
-<main class="calendar-app">
-    {% if calendar %}
-        <header class="calendar-header">
-            <div class="calendar-title">
-                <h1 class="calendar-date">{{ calendar.today_label }}</h1>
-            </div>
-        </header>
-
-        {% case config.view %}
-            {% when 'month' or 'week' or 'day' %}
-                {% render './components/calendar.liquid' with calendar as calendar %}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        {% if dev %}
+            <link rel="stylesheet" href="src/main.css" />
+        {% else %}
+            <link rel="stylesheet" href="{{ 'main.css' | asset_url }}" />
+        {% endif %}
+        <title>{{ manifest.name }}</title>
+    </head>
+    <body>
+        <main class="calendar-app">
+            {% if calendar %}
+                <div class="calendar-grid" id="calendar-grid"></div>
+                <script>
+                    window.__ZENSO_DATA__ = {
+                        calendar: {{ calendar | json_safe }},
+                        config: {{ config | json_safe }}
+                    };
+                </script>
+                <script {% if dev %}type="module"{% endif %} src="{% if dev %}/src/main.js{% else %}{{ 'calendar.js' | asset_url }}{% endif %}"></script>
             {% else %}
-                {% render './components/calendar.liquid' with calendar as calendar %}
-        {% endcase %}
-    {% else %}
-        <div class="calendar-empty">
-            <h1 class="calendar-date">No calendar configured</h1>
-            <p>Add your ICS feed URLs in the plugin settings.</p>
-        </div>
-    {% endif %}
-</main>
-</body>
+                <div class="calendar-empty">
+                    <h1 class="calendar-date">No calendar configured</h1>
+                    <p>Add your ICS feed URLs in the plugin settings.</p>
+                </div>
+            {% endif %}
+        </main>
+    </body>
 </html>

@@ -7,10 +7,11 @@
   "scripts": {
     "dev": "vite dev",
     "prebuild": "rm -rf ./dist/*",
-    "build": "vite build",
+    "build": "vite build && vite build --config vite.calendar.config.js",
     "postbuild": "npm run zip:pack",
     "zip:pack": "cd dist && zip -r plugin.zip .",
-    "mock:refresh": "node scripts/refresh-mock.mjs"
+    "mock:refresh": "node dev/scripts/refresh-mock.mjs",
+    "mock:generate": "node dev/scripts/generate-mock.mjs"
   },
   "homepage": "https://github.com/zensoink/zenso-plugin-examples#readme",
   "bugs": {
@@ -31,6 +32,7 @@
   "dependencies": {
     "@fullcalendar/core": "^6.1.21",
     "@fullcalendar/daygrid": "^6.1.21",
+    "@fullcalendar/list": "^6.1.21",
     "@fullcalendar/timegrid": "^6.1.21"
   }
 }

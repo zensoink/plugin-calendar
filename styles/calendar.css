@@ -1,13 +1,16 @@
 :root {
-    --ink: #191E21;
-    --paper: #F1F1F1;
-    --accent: #31318F;
-    --hairline: #C9C9C9;
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --muted: #f1f5f9;
+    --muted-foreground: #334155;
+    --border: #cbd5e1;
+    --primary: #1e293b;
+    --radius: 8px;
 }
 
 body {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--background);
+    color: var(--foreground);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: none;
     text-rendering: optimizeSpeed;
@@ -17,31 +20,33 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
-    gap: 16px;
+    padding: 12px;
+    gap: 12px;
 }
 
-/* Static toolbar — e-ink take on Mina's Day/Week/Month bar */
+/* Shadcn-style card toolbar (static stand-in for FullCalendar's header) */
 .calendar-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 24px;
-    padding-bottom: 16px;
-    border-bottom: 3px solid var(--ink);
+    gap: 16px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
 }
 
 .calendar-view {
-    font-size: 32px;
+    font-size: 22px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .calendar-date {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--muted-foreground);
 }
 
 .calendar-grid {
@@ -56,76 +61,98 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 20px;
     text-align: center;
 }
 
 .calendar-empty .calendar-date {
-    color: var(--ink);
+    color: var(--foreground);
+    font-size: 32px;
 }
 
-/* FullCalendar theming — clean planner with solid colored event blocks */
+/* FullCalendar — Shadcn-inspired theme */
 .fc {
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 24px;
+    background: var(--background);
+    color: var(--foreground);
+    font-size: 20px;
 }
 
-.fc .fc-scrollgrid {
-    border: none;
+.fc .fc-scrollgrid,
+.fc .fc-col-header-cell,
+.fc .fc-daygrid-day,
+.fc .fc-timegrid-col,
+.fc .fc-timegrid-slot,
+.fc .fc-list-event {
+    border-color: var(--border) !important;
 }
 
 .fc .fc-col-header-cell {
-    background: transparent;
-    border-color: var(--hairline);
-    font-size: 22px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    background: var(--background);
 }
 
 .fc .fc-col-header-cell-cushion {
-    color: var(--ink);
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 16px;
     text-decoration: none;
-    padding: 12px 0;
+    padding: 8px 0;
 }
 
 .fc .fc-daygrid-day-number {
-    color: var(--ink);
-    padding: 10px;
-    font-size: 24px;
+    color: var(--foreground);
+    padding: 8px;
+    font-size: 18px;
 }
 
-.fc .fc-daygrid-day,
-.fc .fc-timegrid-col,
+/* Month view */
+.fc .fc-day-today {
+    background: var(--muted) !important;
+}
+
+.fc .fc-daygrid-event {
+    border-radius: var(--radius);
+    padding: 1px 4px;
+}
+
+.fc .fc-daygrid-more-link {
+    color: var(--muted-foreground);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Week / Day time grid — compact to fit 480px */
 .fc .fc-timegrid-slot {
-    border-color: var(--hairline) !important;
+    height: 22px;
 }
 
 .fc .fc-timegrid-axis,
 .fc .fc-timegrid-slot-label {
-    color: var(--ink);
-    font-size: 20px;
+    color: var(--muted-foreground);
+    font-size: 15px;
 }
 
-.fc .fc-day-today {
-    background: #e5e7eb !important;
+.fc .fc-timegrid-axis-cushion,
+.fc .fc-timegrid-slot-label-cushion {
+    padding: 0 6px;
 }
 
-.fc .fc-list-day-cushion {
-    background: var(--paper);
-    color: var(--ink);
+.fc .fc-timegrid-now-indicator-line {
+    border-color: var(--primary);
+    border-width: 2px;
 }
 
-.fc .fc-list-event {
-    border-color: var(--hairline) !important;
+.fc .fc-timegrid-now-indicator-arrow {
+    border-color: var(--primary);
 }
 
+/* Events: solid fill, rounded, white text (feed color drives the shade) */
 .fc .fc-event {
     border: none;
-    border-radius: 3px;
     color: #fff;
+    border-radius: var(--radius);
     padding: 2px 5px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .fc .fc-event-title {
@@ -134,4 +161,18 @@ body {
 
 .fc .fc-event-time {
     font-weight: 700;
+}
+
+/* List view */
+.fc .fc-list-day-cushion {
+    background: var(--muted);
+    color: var(--foreground);
+}
+
+.fc .fc-list-event-dot {
+    border-color: var(--primary);
+}
+
+.fc .fc-list-event-title {
+    font-weight: 600;
 }

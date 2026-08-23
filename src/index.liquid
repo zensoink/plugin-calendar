@@ -13,10 +13,7 @@
     <body>
         <main class="calendar-app">
             {% if calendar %}
-                <header class="calendar-header">
-                    <span class="calendar-view">{{ config.view | upcase }}</span>
-                    <span class="calendar-date">{{ calendar.today_label }}</span>
-                </header>
+
                 <div class="calendar-grid" id="calendar-grid"></div>
                 <script>
                     window.__ZENSO_DATA__ = {

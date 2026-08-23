@@ -36,7 +36,6 @@
         "items": {
           "type": "object",
           "required": ["url", "color"],
-          "additionalProperties": false,
           "properties": {
             "url": { "type": "string", "format": "uri" },
             "color": { "type": "string", "format": "color", "default": "#3b82f6" }

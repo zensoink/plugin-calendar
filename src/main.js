@@ -22,6 +22,10 @@ const events = (calendar.events || []).map((e) => ({
   color: e.color,
 }))
 
+const now = new Date()
+const pad = (n) => String(n).padStart(2, '0')
+const scrollTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:00`
+
 const fc = new Calendar(document.getElementById('calendar-grid'), {
   plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
   initialView: VIEW_BY_CONFIG[config.view] || 'dayGridMonth',
@@ -32,6 +36,11 @@ const fc = new Calendar(document.getElementById('calendar-grid'), {
   dayMaxEvents: true,
   eventDisplay: 'block',
   nowIndicator: true,
+  scrollTime,
+  slotDuration: '01:00:00',
+  slotMinTime: '06:00:00',
+  slotMaxTime: '23:00:00',
+  expandRows: true,
 })
 
 fc.render()

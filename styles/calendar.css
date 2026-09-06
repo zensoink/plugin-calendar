@@ -176,3 +176,51 @@ body {
 .fc .fc-list-event-title {
     font-weight: 600;
 }
+
+/* Small e-ink: fewer columns already double width; shrink type so titles fit one line */
+@media (max-width: 1000px) {
+    .calendar-app {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .fc {
+        font-size: 16px;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+        font-size: 12px;
+        padding: 4px 0;
+    }
+
+    .fc .fc-timegrid-slot {
+        height: 38px;
+    }
+
+    .fc .fc-event {
+        font-size: 13px;
+        line-height: 1.15;
+        padding: 1px 3px;
+    }
+
+    .fc .fc-event-time {
+        display: none;
+    }
+
+    .fc-daygrid-event,
+    .fc .fc-timegrid .fc-event {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .fc .fc-timegrid-axis,
+    .fc .fc-timegrid-slot-label {
+        font-size: 12px;
+    }
+
+    .fc .fc-timegrid-axis-cushion,
+    .fc .fc-timegrid-slot-label-cushion {
+        padding: 0 4px;
+    }
+}

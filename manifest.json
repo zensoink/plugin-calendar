@@ -5,7 +5,7 @@
   "thumbnail": "assets/logo.png",
   "description": "Read-only agenda view synced from Google Calendar or Apple iCloud via ICS feeds.",
   "schema_version": 1,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "core_min": "0.0.0",
   "license": "MIT",
   "capabilities": ["script"],
@@ -29,6 +29,12 @@
         "maximum": 60,
         "default": 14,
         "description": "How many days ahead to show events"
+      },
+      "time_format": {
+        "type": "string",
+        "enum": ["24h", "12h"],
+        "default": "24h",
+        "description": "Hour format for time axis and event times: 24-hour (06:00) or 12-hour (6am)"
       },
       "calendar_feeds": {
         "type": "array",

@@ -24,7 +24,16 @@ const events = (calendar.events || []).map((e) => ({
 
 const now = new Date()
 const pad = (n) => String(n).padStart(2, '0')
-const scrollTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:00`
+// Backend time wins — the server renders in UTC, so the env clock is UTC, not user time.
+const nowLabel =
+  typeof calendar.now_label === 'string' && /^\d{2}:\d{2}$/.test(calendar.now_label)
+    ? calendar.now_label
+    : `${pad(now.getHours())}:${pad(now.getMinutes())}`
+const scrollTime = `${nowLabel}:00`
+const backendNow =
+  typeof calendar.fetched_at === 'string' && !Number.isNaN(Date.parse(calendar.fetched_at))
+    ? calendar.fetched_at
+    : undefined
 
 const anchor = calendar.today ? new Date(`${calendar.today}T00:00:00`) : now
 anchor.setHours(0, 0, 0, 0)
@@ -55,6 +64,7 @@ const fc = new Calendar(document.getElementById('calendar-grid'), {
   eventDisplay: 'block',
   displayEventTime: false,
   nowIndicator: true,
+  now: backendNow,
   scrollTime,
   slotDuration: '01:00:00',
   slotMinTime: '06:00:00',

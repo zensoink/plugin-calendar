@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url'
 import ical from 'node-ical'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const mockPath = resolve(__dirname, '../mock/zenso.mock.json')
+const mockPath = resolve(__dirname, '../mock/plugin.json')
+const zensoPath = resolve(__dirname, '../mock/zenso.json')
 
 function localParts(date, tz) {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -67,7 +68,8 @@ async function main() {
   }))
 
   const mock = JSON.parse(readFileSync(mockPath, 'utf8'))
-  const tz = mock.zenso.user.time_zone_iana
+  const zenso = JSON.parse(readFileSync(zensoPath, 'utf8'))
+  const tz = zenso.user.time_zone_iana
 
   const fetched = []
   for (const feed of feeds) {
@@ -84,8 +86,8 @@ async function main() {
 
   const today = new Date().toISOString().slice(0, 10)
   mock.config.calendar_feeds = feeds
-  mock.calendar = {
-    ...mock.calendar,
+  mock.data.calendar = {
+    ...mock.data.calendar,
     today,
     events: fetched,
     sources: urls,

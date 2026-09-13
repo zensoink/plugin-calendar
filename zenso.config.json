@@ -1,26 +1,27 @@
 {
   "$schema": "https://schemas.zenso.ink/v1/plugin-manifest.schema.json",
   "id": "zenso/zenso-plugin-calendar",
-  "name": "Zenso Calendar",
   "thumbnail": "assets/logo.png",
-  "description": "Read-only agenda view synced from Google Calendar or Apple iCloud via ICS feeds.",
   "schema_version": 1,
-  "version": "0.0.2",
   "core_min": "0.0.0",
-  "license": "MIT",
-  "capabilities": ["script"],
-  "author": {
-    "name": "Zenso",
-    "url": "https://github.com/zensoink"
-  },
+  "capabilities": [
+    "script"
+  ],
   "config_schema": {
     "type": "object",
-    "required": ["calendar_feeds"],
+    "required": [
+      "calendar_feeds"
+    ],
     "properties": {
       "view": {
         "type": "string",
-        "enum": ["list", "month", "week", "day"],
-        "default": "list",
+        "enum": [
+          "list",
+          "month",
+          "week",
+          "day"
+        ],
+        "default": "week",
         "description": "Calendar layout: list (FullCalendar list view), month, week, or day grid"
       },
       "days_ahead": {
@@ -32,7 +33,10 @@
       },
       "time_format": {
         "type": "string",
-        "enum": ["24h", "12h"],
+        "enum": [
+          "24h",
+          "12h"
+        ],
         "default": "24h",
         "description": "Hour format for time axis and event times: 24-hour (06:00) or 12-hour (6am)"
       },
@@ -41,10 +45,20 @@
         "description": "ICS feeds. Google and Apple don't share feed color, so pick one per feed.",
         "items": {
           "type": "object",
-          "required": ["url", "color"],
+          "required": [
+            "url",
+            "color"
+          ],
           "properties": {
-            "url": { "type": "string", "format": "uri" },
-            "color": { "type": "string", "format": "color", "default": "#3b82f6" }
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "color": {
+              "type": "string",
+              "format": "color",
+              "default": "#3b82f6"
+            }
           }
         }
       }

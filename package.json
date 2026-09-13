@@ -1,33 +1,27 @@
 {
-  "name": "zenso-plugin-example",
-  "description": "Example plugin and starter for Zenso e-ink displays",
+  "name": "zenso-plugin-calendar",
   "version": "0.0.0",
-  "author": "zenso",
-  "private": true,
-  "scripts": {
-    "dev": "vite dev",
-    "prebuild": "rm -rf ./dist/*",
-    "build": "vite build && vite build --config vite.calendar.config.js",
-    "postbuild": "npm run zip:pack",
-    "zip:pack": "cd dist && zip -r plugin.zip .",
-    "mock:refresh": "node dev/scripts/refresh-mock.mjs",
-    "mock:generate": "node dev/scripts/generate-mock.mjs"
-  },
-  "homepage": "https://github.com/zensoink/zenso-plugin-examples#readme",
-  "bugs": {
-    "url": "https://github.com/zensoink/zenso-plugin-examples/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zensoink/zenso-plugin-examples.git"
+  "description": "Read-only agenda view synced from Google Calendar or Apple iCloud via ICS feeds.",
+  "author": {
+    "name": "Zenso",
+    "url": "https://github.com/zensoink"
   },
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/generate-mock.mjs --if-missing",
+    "dev": "vite",
+    "build": "vite build",
+    "mock:generate": "node scripts/generate-mock.mjs",
+    "premock:refresh": "node scripts/generate-mock.mjs --if-missing",
+    "mock:refresh": "node scripts/refresh-mock.mjs"
+  },
   "devDependencies": {
-    "@vituum/vite-plugin-liquid": "^2",
+    "@types/node": "^26.5.0",
+    "@zenso/zenso-vite-plugin": "^0.1.4",
     "node-ical": "^0.27.1",
-    "vite": "^8.0.11",
-    "vite-plugin-static-copy": "^4.1.0",
-    "vituum": "^2.0.2"
+    "typescript": "^5.2.2",
+    "vite": "^6.0.0"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.21",

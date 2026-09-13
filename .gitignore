@@ -8,6 +8,9 @@
 /tmp
 /out-tsc
 /bazel-out
+.plugin.zip
+/plugin.zip
+/plugin.zip.*
 
 # Node
 /node_modules
@@ -44,3 +47,7 @@ Thumbs.db
 
 # Local env & scratch files
 .env
+.slim/
+
+# Generated calendar mock data (recreated by npm run mock:generate / predev bootstrap)
+/mock/plugin.json

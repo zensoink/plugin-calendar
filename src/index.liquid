@@ -1,33 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        {% if dev %}
-            <link rel="stylesheet" href="src/main.css" />
-        {% else %}
-            <link rel="stylesheet" href="{{ 'main.css' | asset_url }}" />
-        {% endif %}
-        <title>{{ manifest.name }}</title>
-    </head>
-    <body>
-        <main class="calendar-app">
-            {% if calendar %}
-
-                <div class="calendar-grid" id="calendar-grid"></div>
-                <script>
-                    window.__ZENSO_DATA__ = {
-                        calendar: {{ calendar | json_safe }},
-                        config: {{ config | json_safe }}
-                    };
-                </script>
-                <script {% if dev %}type="module"{% endif %} src="{% if dev %}/src/main.js{% else %}{{ 'calendar.js' | asset_url }}{% endif %}"></script>
-            {% else %}
-                <div class="calendar-empty">
-                    <h1 class="calendar-date">No calendar configured</h1>
-                    <p>Add your ICS feed URLs in the plugin settings.</p>
-                </div>
-            {% endif %}
-        </main>
-    </body>
+<html lang="{{ zenso.user.language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width={{ zenso.device.width }}, height={{ zenso.device.height }}, initial-scale=1.0">
+    <link href="{{ 'favicon.ico' | asset_url }}" rel="icon" type="image/x-icon"/>
+    <title>{{ plugin.name }}</title>
+</head>
+<body>
+<main class="calendar-app">
+    {% if data.calendar %}
+        <div class="calendar-grid" id="calendar-grid"
+            data-today="{{ data.calendar.today }}"
+            data-now-label="{{ data.calendar.now_label }}"
+            data-fetched-at="{{ data.calendar.fetched_at }}"
+            data-view="{{ config.view }}"
+            data-time-format="{{ config.time_format }}"></div>
+        <template id="calendar-data">
+            {% for e in data.calendar.events %}
+            <span data-title="{{ e.title | escape }}" data-start="{{ e.start }}" data-end="{{ e.end }}" data-all-day="{{ e.all_day }}" data-color="{{ e.color }}"></span>
+            {% endfor %}
+        </template>
+    {% else %}
+        <div class="calendar-empty">
+            <h1 class="calendar-date">No calendar configured</h1>
+            <p>Add your ICS feed URLs in the plugin settings.</p>
+        </div>
+    {% endif %}
+</main>
+</body>
 </html>

@@ -10,7 +10,7 @@ A read-only calendar plugin for Zenso e-ink displays (800×480), synced from
   - `month` / `week` / `day`: FullCalendar grid views
 - All-day and timed events, with location when available
 - Server-side data fetching via the universal `data_sources` contract
-- English UI, e-ink-friendly high-contrast styling (black grid lines)
+- Multi-language & locale support (adapts to user's Zenso profile language/locale), e-ink-friendly high-contrast styling (black grid lines)
 - JS rendering via the `script` capability (bundled `assets/main.js`, no remote scripts)
 
 ## Configuration

@@ -14,7 +14,9 @@
             data-now-label="{{ data.calendar.now_label }}"
             data-fetched-at="{{ data.calendar.fetched_at }}"
             data-view="{{ config.view }}"
-            data-time-format="{{ config.time_format }}"></div>
+            data-time-format="{{ config.time_format }}"
+            data-locale="{{ zenso.user.locale }}"
+            data-language="{{ zenso.user.language }}"></div>
         <template id="calendar-data">
             {% for e in data.calendar.events %}
             <span data-title="{{ e.title | escape }}" data-start="{{ e.start }}" data-end="{{ e.end }}" data-all-day="{{ e.all_day }}" data-color="{{ e.color }}"></span>

@@ -1,4 +1,5 @@
 import { Calendar } from '@fullcalendar/core';
+import localesAll from '@fullcalendar/core/locales-all';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
@@ -23,6 +24,7 @@ const nowLabelRaw = gridData.nowLabel || undefined;
 const fetchedAt = gridData.fetchedAt || undefined;
 const view = gridData.view || undefined;
 const timeFormat = gridData.timeFormat || undefined;
+const locale = (gridData.locale || gridData.language || document.documentElement.lang || 'en').toLowerCase();
 
 const dataHolder = document.getElementById('calendar-data');
 const eventNodes =
@@ -66,6 +68,8 @@ const hour12 = (timeFormat ?? '24h') === '12h';
 if (grid) {
     const fc = new Calendar(grid, {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
+        locales: localesAll,
+        locale,
         initialView: VIEW_BY_CONFIG[view ?? ''] ?? 'dayGridMonth',
         initialDate: today,
         views: {

@@ -1,62 +1,68 @@
-# Zenso Plugin Template
+# Zenso Calendar
 
-A starter template for developing Zenso widgets and plugins for e-ink displays.
+A read-only calendar plugin for Zenso e-ink displays (800×480), synced from
+**Google Calendar** or **Apple iCloud** via standard ICS feeds.
 
 ## Features
 
-- Liquid template rendering with Vite
-- Mock data for local development
-- GitHub Actions CI/CD for releases
-
-## Project Structure
-
-```
-├── src/              # Source code
-├── assets/           # Assets (images, thubnail)
-├── dev/              # Mock data and pages
-├── dist/             # Build output
-├── manifest.json     # Plugin configuration
-└── vite.config.js    # Build settings
-```
-
-## Getting Started
-
-### Prerequisites
-```bash
-npm install
-```
-
-### Development
-```bash
-npm run dev      # Start dev server with hot reload
-npm run preview  # Preview production build
-```
-
-### Build
-```bash
-npm run build   # Create production build in dist/
-```
+- Layouts, set per plugin instance (`view` config):
+  - `list`: FullCalendar list view
+  - `month` / `week` / `day`: FullCalendar grid views
+- All-day and timed events, with location when available
+- Server-side data fetching via the universal `data_sources` contract
+- Multi-language & locale support (adapts to user's Zenso profile language/locale), e-ink-friendly high-contrast styling (black grid lines)
+- JS rendering via the `script` capability (bundled `assets/main.js`, no remote scripts)
 
 ## Configuration
 
-### manifest.json
-Configure your plugin's metadata (id, name, description, schema_version, etc.).
+Plugin instance config (`configJson`, see `config_schema` in `zenso.config.json`):
 
-### Mock Data
-Add or edit mock data in `dev/mock/*.json` to test templates locally.
+| Field            | Type               | Description                                                                                   | Default |
+| ---------------- | ------------------ | --------------------------------------------------------------------------------------------- | ------- |
+| `calendar_feeds` | `{ url, color }[]` | ICS feeds. Each entry is `{ url: string, color: string }` (Google/Apple don't share color, so pick one per feed) | — |
+| `days_ahead`     | `number`           | How many days ahead to show events (1–60)                                                     | `14`    |
+| `view`           | `string`           | Layout: `list`, `month`, `week`, or `day`                                                     | `list`  |
+| `time_format`    | `string`           | Hour format: `24h` or `12h`                                                                   | `24h`   |
 
-### Template Variables
-Use Liquid syntax (`{{ variable }}`, `{% render %}`) in your templates.
+## Adding your calendars
 
-For Liquid template syntax, see the [official Liquid tutorial](https://liquidjs.com/tutorials/intro-to-liquid.html).
+The plugin is read-only: it subscribes to your existing calendars over the
+standard ICS (iCalendar) feed format. For each calendar you want on the
+display, grab its feed URL below and add it as a `calendar_feeds` entry
+(`{ url, color }`) in the plugin instance settings. Google and Apple feeds
+carry no color of their own, so pick one per feed. Repeat for every calendar.
 
-## Deployment
+### Google Calendar
 
-Trigger a release by creating a git tag:
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
+1. On a computer, open [calendar.google.com](https://calendar.google.com).
+2. In the left sidebar, hover the calendar → click `⋮` → **Settings and sharing**
+   (alternatively: gear icon → Settings → *Settings for my calendars* → pick the calendar).
+3. Scroll to **Integrate calendar** → copy the **Secret address in iCal format**
+   (use the Secret address, not the Public one).
+4. Paste it as a feed `url` and pick a `color`.
+
+> Treat the Secret address like a password: anyone holding it can read that
+> calendar. You can invalidate it anytime via **Reset** on the same settings
+> page. Google Workspace users may not see the address if the admin blocked
+> external sharing — ask the admin in that case.
+
+### Apple iCloud
+
+1. Go to [icloud.com/calendar](https://www.icloud.com/calendar) and sign in
+   (same toggle also exists in the macOS Calendar sidebar share icon, and on
+   iPhone under Calendars → `ⓘ` → Public Calendar).
+2. Hover the calendar in the sidebar → click the share icon → turn on
+   **Public Calendar** → **Copy** the link.
+3. Apple hands out a `webcal://…` link — **change the scheme to `https://`**
+   (e.g. `https://pXX-caldav.icloud.com/published/...`), because the backend
+   fetches the feed over plain HTTPS.
+4. Paste it as a feed `url` and pick a `color`.
+
+> The public link is read-only and exposes full event details (titles, notes,
+> locations) to anyone holding it. It stays live until you switch Public
+> Calendar off, which kills the link. iCloud edits can lag several to ~15+
+> minutes behind before they appear in the feed.
+
 
 ## License
 
